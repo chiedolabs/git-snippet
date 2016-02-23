@@ -34,11 +34,13 @@ module.exports.index = (req, res) => {
     // else, store all the lines
     if(start !== NaN && end !== NaN) {
       for(let i = start; i <= end; i++) {
-        // Clean the quotes
-        let parsedLine = lines[i].replace(/\"/ig, '\\"').replace(/\'/ig,"\\'");
+        if(lines[i]) {
+          // Clean the quotes
+          let parsedLine = lines[i].replace(/\"/ig, '\\"').replace(/\'/ig,"\\'");
 
-        // We use document.writes to make sure it gets output to the page when the script is accessed
-        sampleLines.push(`document.write('${parsedLine}\\r\\n');`);
+          // We use document.writes to make sure it gets output to the page when the script is accessed
+          sampleLines.push(`document.write('${parsedLine}\\r\\n');`);
+        }
       }
     } else {
       sampleLines = lines;
@@ -48,7 +50,26 @@ module.exports.index = (req, res) => {
     let sampleCode = sampleLines.join('\n');
     
     // Add the openening and closing pre tags
-    sampleCode = `document.write('<pre>');\n${sampleCode}\ndocument.write('</pre>');`;
+    sampleCode = `document.write('<pre class=\\"prettyprint\\" style="padding:10px;">');\n${sampleCode}\ndocument.write('</pre>');`;
+
+    // Add the script which loads Google code prettify
+    let skin = req.query['skin'] || 'sons-of-obsidian';
+    // Get lang from file extension
+    let lang = req.originalUrl.split('?')[0].split('.').reverse()[0];
+
+    let prettifyLoader ='';
+    prettifyLoader += `if(window.runPrettifyLoaded !== true) {\n`
+    prettifyLoader += `loadJS('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=${lang}&skin=${skin}');\n`
+    prettifyLoader += `function loadJS(file) {\n`
+    prettifyLoader += `window.runPrettifyLoaded = true;\n`
+    prettifyLoader += `var jsElm = document.createElement("script");\n`
+    prettifyLoader += `jsElm.type = "application/javascript";\n`
+    prettifyLoader += `jsElm.src = file;\n`
+    prettifyLoader += `document.body.appendChild(jsElm);\n`
+    prettifyLoader += `}\n`
+    prettifyLoader +=` }\n`
+
+    sampleCode = `${sampleCode}${prettifyLoader}`;
     
     // Return the script
     res.set('Content-Type', 'application/x-javascript'); 

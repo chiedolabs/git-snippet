@@ -46,6 +46,10 @@ app.get('/test-code', (req, res) => {
   res.sendfile(path.resolve(__dirname + '/test-code.txt'));
 });
 
+app.get('/test.html', (req, res) => {
+  res.sendfile(path.resolve(__dirname + '/test.html'));
+});
+
 app.use(router);
 
 router.route('*')
