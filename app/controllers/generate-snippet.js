@@ -38,12 +38,17 @@ module.exports.index = (req, res) => {
         let parsedLine = lines[i].replace(/\"/ig, '\\"').replace(/\'/ig,"\\'");
 
         // We use document.writes to make sure it gets output to the page when the script is accessed
-        sampleLines.push(`document.write('${parsedLine}');`);
+        sampleLines.push(`document.write('${parsedLine}\\r\\n');`);
       }
     } else {
       sampleLines = lines;
     }
+    
+    // Recombine the string
     let sampleCode = sampleLines.join('\n');
+    
+    // Add the openening and closing pre tags
+    sampleCode = `document.write('<pre>');\n${sampleCode}\ndocument.write('</pre>');`;
     
     // Return the script
     res.set('Content-Type', 'application/x-javascript'); 
