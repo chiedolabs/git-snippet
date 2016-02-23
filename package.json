@@ -1,0 +1,30 @@
+{
+  "name": "git-snippets",
+  "version": "0.0.1",
+  "description": "Allows you to embed code directly from github into your website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=development nodemon app.js"
+  },
+  "author": "Chiedo <chiedo@chie.do> (https://chie.do)",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "babel": "^5.8.29",
+    "babel-core": "^6.1.2",
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "morgan": "^1.6.1",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^3.1.9",
+    "dotenv": "^1.2.0",
+    "es6-promise": "^3.0.2",
+    "eslint": "^1.7.2",
+    "nodemon": "^1.8.0"
+  }
+}
