@@ -12,6 +12,7 @@
   "dependencies": {
     "babel": "^5.8.29",
     "babel-core": "^6.1.2",
+    "bluebird": "^3.3.1",
     "body-parser": "^1.14.1",
     "cookie-parser": "^1.4.0",
     "cors": "^2.7.1",
@@ -20,6 +21,7 @@
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
+    "redis": "^2.4.2",
     "url": "^0.11.0"
   },
   "devDependencies": {

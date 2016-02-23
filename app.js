@@ -17,14 +17,14 @@ process.chdir(__dirname);
 //Allow the use of more es6 features within the node project, such as es6 imports, etc.
 require('babel/register');
 
-let express       = require('express');
-let cookieParser  = require('cookie-parser');
-let app           = express();
-let bodyParser    = require('body-parser');
-let morgan        = require('morgan');
-let cors          = require('cors');
-let path          = require('path');
-let router        = express.Router();
+let express         = require('express');
+let cookieParser    = require('cookie-parser');
+let app             = express();
+let bodyParser      = require('body-parser');
+let morgan          = require('morgan');
+let cors            = require('cors');
+let path            = require('path');
+let router          = express.Router();
 let generateSnippet = require('./app/controllers/generate-snippet');
 
 //Enable all cors requests
@@ -43,11 +43,11 @@ if(env === 'development') {
 
 // Routes
 app.get('/test-code', (req, res) => {
-  res.sendfile(path.resolve(__dirname + '/test-code.txt'));
+  res.sendFile(path.resolve(__dirname + '/test-code.txt'));
 });
 
 app.get('/test.html', (req, res) => {
-  res.sendfile(path.resolve(__dirname + '/test.html'));
+  res.sendFile(path.resolve(__dirname + '/test.html'));
 });
 
 app.use(router);

@@ -1,6 +1,7 @@
 'use strict';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+let client = require('../redis');
 
 module.exports.index = (req, res) => {
   let githubURL;
@@ -17,13 +18,42 @@ module.exports.index = (req, res) => {
   // Store the start line and end line
   let start = parseInt(req.query['start'], 10) - 1;
   let end = parseInt(req.query['end'], 10) - 1;
-   
-  return fetch(githubURL)
-  .then((response) => {
-    if (response.status >= 400) {
-      throw new Error("Bad response from server");
+  
+  let getCachedData;
+
+  if(client.connected) {
+    getCachedData =  client.getAsync(githubURL);
+  } else {
+    getCachedData = Promise.resolve(false);
+  }
+
+  return getCachedData
+  .then((res) => {
+    // Return the cached data if located otherwise, return nothing
+    if(res) {
+      return res;
+    } else {
+      return fetch(githubURL)
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.text();
+      })
+      .then((code) => {
+        // Cache if redis is setup
+        if(client.connected) {
+          client.set(githubURL, code); 
+        }
+
+        return code;
+      })
+      .catch((error) => {
+        return res.json({
+          error: error.message,
+        });
+      });
     }
-    return response.text();
   })
   .then((code) => {
     let lines = code.split('\n');

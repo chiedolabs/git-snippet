@@ -37,6 +37,8 @@ You can add the following query strings to the script tag to alter the behavior 
 
 Unless your local environment is set to 'production', your request will always be redirected to localhost:8000/test-code. This is to prevent github from getting annoyed.
 
+If you have a local redis server running, caching will be done through redis, otherwise, no caching will be performed.
+
 ## Deployment
 Deployment is pretty simple. Deploy with whatever you want. Just set an Environment variable named ```PORT``` and set it to ```80```.
 
