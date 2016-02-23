@@ -26,7 +26,7 @@ module.exports.index = (req, res) => {
     } else {
       sampleLines = lines;
     }
-    console.dir(sampleLines)
+
     let sampleCode = sampleLines.join('\n');
     
     return res.send(sampleCode);
