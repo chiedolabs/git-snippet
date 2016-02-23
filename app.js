@@ -40,9 +40,14 @@ if(env === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use(router);
 
 // Routes
+app.get('/test-code', (req, res) => {
+  res.sendfile(path.resolve(__dirname + '/test-code.txt'));
+});
+
+app.use(router);
+
 router.route('*')
   .get(generateSnippet.index);
 
