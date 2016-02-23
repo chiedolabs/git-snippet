@@ -51,7 +51,7 @@ module.exports.index = (req, res) => {
     
     // Add the openening and closing pre tags
     let wrappedCode =''
-    let genCSS = 'position: absolute; bottom: 10px; padding: 5px; border-top: 1px #333333 solid; opacity: .7; font-family: sans-serif; font-size: 12px; font-weight: 900; width: 100%; margin-left: -10px; margin-bottom: -10px;';
+    let genCSS = 'position: absolute; bottom: 10px; padding: 5px; border-top: 1px #333333 solid; opacity: .7; font-family: sans-serif; font-size: 12px; font-weight: 900; margin-left: -10px; margin-bottom: -10px;';
 
     wrappedCode += `document.write('<div style="position: relative;"><pre class=\\"prettyprint\\" style="padding:10px; padding-bottom: 30px;">');\n`;
     wrappedCode += `${sampleCode}\n`;
