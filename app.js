@@ -1,17 +1,17 @@
 // NEW
 'use strict';
 
-let fs = require('fs');
+let fs = require('fs-extra');
 
 let env  = process.env.NODE_ENV;
 // Ensure we're in the project directory, so relative paths work as expected
 // no matter where we actually lift from.
 // Load dotenv if available
-fs.stat('.env', (err, stat) => {
-  if(err === null) {
-    require('dotenv').config({silent: true});
-  }
-});
+try {
+  fs.statSync('.env')
+  require('dotenv').config({silent: true});
+} catch (err) {
+}
 
 if(process.env.NODE_ENV === 'production') {
   require('newrelic');
