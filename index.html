@@ -21,19 +21,22 @@
 
     <section class="main-content">
 
-      <input id="url-input" type="text" placeholder="Paste a GitHub file URL here" />
+      <input id="url-input" class="custom-input" type="text" placeholder="Paste a GitHub file URL here" />
+      <input id="start-input" class="custom-input short-input" type="text" placeholder="The Start line" />
+      <input id="end-input" class="custom-input short-input" type="text" placeholder="The End line" />
       <p>Include the commit in your URL because everything is cached. If you don't then your changes may not be reflected on your website.</p>
 
       <h3>Your script code</h3> 
       <p>You can add the following code anywhere on your website and your code sample will be displayed</p>
+
       <code><span id="script-tag"></span></code>
     <h3>Query String Options</h3>
     <p>You can add the following query strings to the src of the script tag to alter the behavior of the script.</p>
     <ul>
-      <li>start - The first line you would like to include in the code output. Must be used with 'end'</li>
-      <li>end - The last line you would like to inclued in the code output. Must be used with 'start'</li>
+      <li>start - The first line you would like to include in the code output.</li>
+      <li>end - The last line you would like to inclued in the code output.</li>
       <li>lang - The Google Prettify language formatter to use for formatting your output. If not used, your file extension will be used. See the <a href="https://github.com/google/code-prettify" target="_blank">supported languages</a>.</li>
-      <li>skin - The Google Prettify skin to be used. See the <a href="https://rawgit.com/google/code-prettify/master/styles/index.html" target="_blank">skin gallery</a></li>
+      <li>skin - The Google Prettify skin to be used. Note that all code on the page must use the same skin. This feature works but is a little buggy in it's implementation. See the <a href="https://rawgit.com/google/code-prettify/master/styles/index.html" target="_blank">skin gallery</a></li>
     </ul>
 
     <h3>
@@ -51,23 +54,29 @@
 
     </section>
     <script>
+      window.path = '';
+      window.start = '';
+      window.end = '';
+
       var updateScriptTag = function() {
         var urlInput = $('#url-input').val();
 
         var parser = document.createElement('a');
         parser.href = urlInput;
-        var path;
 
         if(parser.hostname === 'github.com') {
           // Get rid of /blog
           var split = parser.pathname.split('/');
           split.splice(3,1);
-          path = split.join('/');
+          window.path = split.join('/');
         } else {
-          path = parser.pathname;
+          window.path = parser.pathname;
         }
 
-        var scriptInput = 'http://www.gitsnippet.com'+path;
+        window.start=$('#start-input').val();
+        window.end=$('#end-input').val();
+
+        var scriptInput = window.location.origin +window.path+'?start='+window.start+'&end='+window.end;
         var x = '&lt;script src="'+scriptInput+'"&gt;&lt;/script&gt;';
         $('#script-tag').html(x);
       }

@@ -16,8 +16,14 @@ module.exports.index = (req, res) => {
   }
 
   // Store the start line and end line
-  let start = parseInt(req.query['start'], 10) - 1;
-  let end = parseInt(req.query['end'], 10) - 1;
+  let start;
+  let end;
+  if(req.query['start']) {
+    start = parseInt(req.query['start'], 10) - 1;
+  }
+  if(req.query['end']) {
+    end = parseInt(req.query['end'], 10) - 1;
+  }
   
   let getCachedData;
 
@@ -62,18 +68,23 @@ module.exports.index = (req, res) => {
     
     // If a start and end line were specified, store all the matching lines,
     // else, store all the lines
-    if(start !== NaN && end !== NaN) {
-      for(let i = start; i <= end; i++) {
-        if(lines[i]) {
-          // Clean the quotes
-          let parsedLine = lines[i].replace(/\"/ig, '\\"').replace(/\'/ig,"\\'");
 
-          // We use document.writes to make sure it gets output to the page when the script is accessed
-          sampleLines.push(`document.write('${parsedLine}\\r\\n');`);
-        }
+    if(!start) {
+      start = 0;
+    }
+    
+    if(!end) {
+      end = lines.length - 1;
+    }
+
+    for(let i = start; i <= end; i++) {
+      if(lines[i] !== undefined) {
+        // Clean the quotes
+        let parsedLine = lines[i].replace(/\"/ig, '\\"').replace(/\'/ig,"\\'");
+
+        // We use document.writes to make sure it gets output to the page when the script is accessed
+        sampleLines.push(`document.write('${parsedLine}\\r\\n');`);
       }
-    } else {
-      sampleLines = lines;
     }
     
     // Recombine the string
