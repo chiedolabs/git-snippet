@@ -1,5 +1,6 @@
 // NEW
 'use strict';
+
 let fs = require('fs');
 
 let env  = process.env.NODE_ENV;
@@ -11,6 +12,10 @@ fs.stat('.env', (err, stat) => {
     require('dotenv').config({silent: true});
   }
 });
+
+if(process.env.NODE_ENV === 'production') {
+  require('newrelic');
+}
 
 process.chdir(__dirname);
 
