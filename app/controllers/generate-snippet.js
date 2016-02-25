@@ -2,12 +2,23 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-let fs = require('fs-extra-promise');
-let slugify  = require("slugify-url");
-let path     = require("path");
+let fs      = require('fs-extra-promise');
+let slugify = require("slugify-url");
+let path    = require("path");
+let ua      = require('universal-analytics');
 
 module.exports.index = (req, res) => {
+  let visitor;
+
+  if(process.env.GOOGLE_ANALYTICS_ID) {
+    visitor = ua(process.env.GOOGLE_ANALYTICS_ID);
+  }
+
   let githubURL = `https://raw.githubusercontent.com${req.originalUrl}`;
+
+  if(process.env.GOOGLE_ANALYTICS_ID) {
+    visitor.pageview(req.originalUrl).send()
+  }
 
   // Store the start line and end line
   let start;
