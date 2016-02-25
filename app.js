@@ -46,10 +46,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/index.html'));
 });
 
-app.get('/test-code', (req, res) => {
-  res.sendFile(path.resolve(__dirname + '/test-code.txt'));
-});
-
 app.get('/test.html', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/test.html'));
 });
