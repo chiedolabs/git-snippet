@@ -14,7 +14,29 @@ module.exports.index = (req, res) => {
     visitor = ua(process.env.GOOGLE_ANALYTICS_ID);
   }
 
+  let source = req.query['source'];
+
+  let sourceURL;
   let githubURL = `https://raw.githubusercontent.com${req.originalUrl}`;
+  
+  if(source === 'gitlab') {
+    // Make sure the raw format is used
+    let split = req.originalUrl.split('/');
+    split[3] = 'raw';
+    let path = split.join('/');
+    sourceURL = `https://gitlab.com${path}`;
+    console.dir(sourceURL);
+  } else if(source === 'bitbucket') {
+    // Make sure the raw format is used
+    let split = req.originalUrl.split('/');
+    split[3] = 'raw';
+    let path = split.join('/');
+    sourceURL = `https://bitbucket.org${path}`;
+  } else if(source === 'github') {
+    sourceURL = githubURL;
+  } else {
+    sourceURL = githubURL;
+  }
 
   if(process.env.GOOGLE_ANALYTICS_ID) {
     visitor.pageview(req.originalUrl).send()
@@ -30,7 +52,7 @@ module.exports.index = (req, res) => {
     end = parseInt(req.query['end'], 10) - 1;
   }
 
-  let cacheFileName = slugify(githubURL);
+  let cacheFileName = slugify(sourceURL);
   let cacheDir = path.dirname(require.main.filename)+'/cache';
   let cachedFilePath = cacheDir+'/'+cacheFileName +'.txt';
 
@@ -46,7 +68,7 @@ module.exports.index = (req, res) => {
         return fs.readFileAsync(cachedFilePath, 'utf8');
       } else {
         // Get the data from github
-        return fetch(githubURL)
+        return fetch(sourceURL)
         .then((response) => {
           if (response.status >= 400) {
             throw new Error("Bad response from server");
@@ -66,9 +88,7 @@ module.exports.index = (req, res) => {
         })
         .catch((error) => {
           console.dir(error);
-          return res.json({
-            error: error.message,
-          });
+          return res.send('console.dir("You made a mistake somewhere. Your code could not be fetched.")');
         });
       }
     })
