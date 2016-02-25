@@ -1,1 +1,3 @@
 cache
+.env
+node_modules
