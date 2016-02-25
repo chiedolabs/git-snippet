@@ -10,8 +10,8 @@ let ua      = require('universal-analytics');
 module.exports.index = (req, res) => {
   let visitor;
 
-  if(process.env.GOOGLE_ANALYTICS_ID) {
-    visitor = ua(process.env.GOOGLE_ANALYTICS_ID);
+  if(process.env.GOOGLE_ANALYTICS_ID && process.env.GOOGLE_ANALYTICS_UUID) {
+    visitor = ua(process.env.GOOGLE_ANALYTICS_ID, process.env.GOOGLE_ANALYTICS_UUID);
   }
 
   let source = req.query['source'];
@@ -38,8 +38,8 @@ module.exports.index = (req, res) => {
     sourceURL = githubURL;
   }
 
-  if(process.env.GOOGLE_ANALYTICS_ID) {
-    visitor.pageview(req.originalUrl).send()
+  if(process.env.GOOGLE_ANALYTICS_ID && process.env.GOOGLE_ANALYTICS_UUID) {
+    visitor.pageview(req.originalUrl).send();
   }
 
   // Store the start line and end line
