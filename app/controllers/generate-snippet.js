@@ -138,8 +138,6 @@ module.exports.index = (req, res) => {
       sampleCode = wrappedCode;
 
       let prettifyLoader ='';
-      prettifyLoader += `if(window.runPrettifyLoaded !== true) {\n`
-      prettifyLoader += `loadJS('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=${skin}');\n`
       prettifyLoader += `function loadJS(file) {\n`
       prettifyLoader += `window.runPrettifyLoaded = true;\n`
       prettifyLoader += `var jsElm = document.createElement("script");\n`
@@ -147,6 +145,8 @@ module.exports.index = (req, res) => {
       prettifyLoader += `jsElm.src = file;\n`
       prettifyLoader += `document.body.appendChild(jsElm);\n`
       prettifyLoader += `}\n`
+      prettifyLoader += `if(window.runPrettifyLoaded !== true) {\n`
+      prettifyLoader += `loadJS('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=${skin}');\n`
       prettifyLoader +=` }\n`
 
       sampleCode = `${sampleCode}${prettifyLoader}`;
