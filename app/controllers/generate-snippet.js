@@ -168,7 +168,15 @@ module.exports.index = (req, res) => {
       prettifyLoader += `loadJS('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=${skin}');\n`
       prettifyLoader +=` }\n`
 
-      sampleCode = `${sampleCode}${prettifyLoader}`;
+      let styleCorrections = '';
+      styleCorrections += "function addStyleString(str) {\n";
+      styleCorrections += "  var node = document.createElement('style');\n";
+      styleCorrections += "  node.innerHTML = str;\n";
+      styleCorrections += "  document.body.appendChild(node);\n";
+      styleCorrections += "}\n";
+      styleCorrections += "addStyleString('.git-snippet-attribution a, .git-snippet-attribution span, .git-snippet-attribution div, .git-snippet-attribution { color: #ffffff !important; text-decoration: none !important; opacity: 1 !important; }');\n";
+
+      sampleCode = `${sampleCode}${prettifyLoader}${styleCorrections}`;
       
       // Return the script
       res.set('Content-Type', 'application/x-javascript'); 
