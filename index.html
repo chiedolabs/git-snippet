@@ -111,7 +111,7 @@
         window.start=$('#start-input').val();
         window.end=$('#end-input').val();
 
-        var scriptInput = window.location.origin +window.path+'?start='+window.start+'&end='+window.end+'&source='+window.source;
+        var scriptInput = window.location.origin.replace('http','https') +window.path+'?start='+window.start+'&end='+window.end+'&source='+window.source;
         var x = '&lt;script src="'+scriptInput+'"&gt;&lt;/script&gt;';
         $('#script-tag').html(x);
       }
