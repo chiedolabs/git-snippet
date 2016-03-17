@@ -180,7 +180,7 @@ module.exports.index = (req, res) => {
       styleCorrections += "  node.innerHTML = str;\n";
       styleCorrections += "  document.body.appendChild(node);\n";
       styleCorrections += "}\n";
-      styleCorrections += "addStyleString('.git-snippet-attribution a, .git-snippet-attribution span, .git-snippet-attribution div, .git-snippet-attribution { color: #ffffff !important; text-decoration: none !important; }');\n";
+      styleCorrections += "addStyleString('.git-snippet-attribution a, .git-snippet-attribution span, .git-snippet-attribution div, .git-snippet-attribution { color: #ffffff !important; text-decoration: none !important; } .prettyprint ol.linenums li:last-child { list-style-type: none; }');\n";
 
       sampleCode = `${sampleCode}${prettifyLoader}${styleCorrections}`;
       
