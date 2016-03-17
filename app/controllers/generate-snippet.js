@@ -154,7 +154,7 @@ module.exports.index = (req, res) => {
 
       // Add the openening and closing pre tags
       let wrappedCode =''
-      let genCSS = 'position: relative; top: 5px; padding: 5px; border-top: 1px #333333 solid; font-family: sans-serif; font-size: 12px; font-weight: 900; margin-top: 10px; margin-bottom: -10px; background: #000000;';
+      let genCSS = 'position: relative; top: 5px; padding: 5px; border-top: 1px #333333 solid; font-family: sans-serif; font-size: 12px; font-weight: 900; margin-top: 10px; margin-bottom: -10px;';
 
       wrappedCode += `document.write('<div style="position: relative;"><pre class=\\"prettyprint ${linenums} lang-${lang}\\" style="padding:10px; padding-bottom: 20px;">');\n`;
       wrappedCode += `${sampleCode}\n`;
@@ -180,7 +180,7 @@ module.exports.index = (req, res) => {
       styleCorrections += "  node.innerHTML = str;\n";
       styleCorrections += "  document.body.appendChild(node);\n";
       styleCorrections += "}\n";
-      styleCorrections += "addStyleString('.git-snippet-attribution a, .git-snippet-attribution span, .git-snippet-attribution div, .git-snippet-attribution { color: #ffffff !important; text-decoration: none !important; } .prettyprint ol.linenums li:last-child { list-style-type: none; }');\n";
+      styleCorrections += "addStyleString('.git-snippet-attribution a, .git-snippet-attribution span, .git-snippet-attribution div, .git-snippet-attribution { color: #ffffff; text-decoration: none; } .prettyprint ol.linenums li:last-child { list-style-type: none; }');\n";
 
       sampleCode = `${sampleCode}${prettifyLoader}${styleCorrections}`;
       
