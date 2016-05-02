@@ -14,7 +14,7 @@ try {
 }
 
 if(process.env.NODE_ENV === 'production') {
-  require('newrelic');
+  //require('newrelic');
 }
 
 process.chdir(__dirname);
