@@ -1,7 +1,7 @@
 # Git Snippet
 The goal of this is to allow you to embed code samples into your webpages straight from your github account the same way you can from github gists. You can use your own server and deploy this code or you can use the Gitsnippet.com server.
 
-<a href="http://www.gitsnippet.com" target="_blank">Read the docs for usage information.</a>
+<a href="http://gitsnippet.herokuapp.com" target="_blank">Read the docs for usage information.</a>
 
 ## Getting Started
 
